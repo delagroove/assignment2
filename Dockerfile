@@ -5,9 +5,31 @@ RUN apk update && apk upgrade && \
 
 WORKDIR /usr/src/app
 
-RUN pip install terminaltables
-RUN pip install beautifulsoup4
-RUN pip install requests
+#RUN pip install terminaltables
+#RUN pip install beautifulsoup4
+#RUN pip install requests
+#pip install pymongo
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+#
+
+# INFO ABOUT INSTALLING MONGO DB
+#RUN apk add mongodb --update-cache --repository http://dl-4.alpinelinux.org/alpine/edge/testing --allow-untrusted && \
+#	rm -rf /var/cache/apk/*
+#
+## Create dbdata path
+#RUN mkdir -p /data/db
+#
+## Define mountable directories.
+#VOLUME ["/data/db"]
+#
+## Define default command.
+#CMD ["mongod"]
+#
+#EXPOSE 27017
+
+# RUN mongo --eval "db.getSiblingDB('crypto').createUser({'user':'admin', 'pwd':'admin','roles':['readWrite']});"
 
 #ADD repo-key /
 
@@ -28,6 +50,6 @@ RUN \
 #  chmod 600 /repo-key && \
 #  echo "IdentityFile /repo-key" >> /etc/ssh/ssh_config && \
 #  echo -e "StrictHostKeyChecking no" >> /etc/ssh/ssh_config && \
-  git clone https://github.com/delagroove/assignment1.git /usr/src/app/assignment1
+  git clone https://github.com/delagroove/assignment2.git /usr/src/app/assignment2
 
-CMD [ "python", "/usr/src/app/assignment1/main.py" ]
+CMD [ "python", "/usr/src/app/assignment2/main.py" ]
