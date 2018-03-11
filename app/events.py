@@ -1,47 +1,14 @@
-from flask_socketio import SocketIO
+from flask_socketio import send, emit
 from flask import current_app, request
 
 import os, uuid, json
 
-
-socketio = SocketIO()
-
-
-@socketio.on('connected')
+@socketio.on('connect')
 def connected():
-    #print "%s connected" % (request.sid)
+    print ("%s connected")
     print("A")
 
-
-@socketio.on('disconnect')
-def disconnect():
+@socketio.on('message')
+def ticker():
     #print "%s disconnected" % (request.sid)
-    print("B")
-
-
-@socketio.on('start-transfer')
-def start_transfer(filename, size):
-    """Process an upload request from the client."""
-    _, ext = os.path.splitext(filename)
-    if ext in ['.exe', '.bin', '.js', '.sh', '.py', '.php']:
-        return False  # reject the upload
-    id = uuid.uuid4().hex  # server-side filename
-    with open(current_app.config['FILEDIR'] + id + '.json', 'wt') as f:
-        json.dump({'filename': filename, 'size': size}, f)
-    with open(current_app.config['FILEDIR'] + id + ext, 'wb') as f:
-        pass
-    return id + ext  # allow the upload
-
-
-@socketio.on('write-chunk')
-def write_chunk(filename, offset, data):
-    """Write a chunk of data sent by the client."""
-    if not os.path.exists(current_app.config['FILEDIR'] + filename):
-        return False
-    try:
-        with open(current_app.config['FILEDIR'] + filename, 'r+b') as f:
-            f.seek(offset)
-            f.write(data)
-    except IOError:
-        return False
-    return True
+    emit('SubAdd', {subs: ['0~Poloniex~BTC~USD']});

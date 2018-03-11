@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DropFileInput from './components/DropFileInput';
+import Graph from './components/Graph';
 import './App.css';
 
 class App extends Component {
@@ -7,6 +7,7 @@ class App extends Component {
 		return (
 			<div className="App">
 				THIS IS A TEST
+				<Graph />
 			</div>
 		);
 	}
