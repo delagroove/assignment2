@@ -1,9 +1,12 @@
 var path = require('path');
 
 const ENTRY_DIR = path.resolve(__dirname, 'app/static/javascript/src');
-
+const MODULES_DIR = path.resolve(__dirname, 'node_modules/');
 var config = {
-    target: 'node',
+    target: 'web',
+    devtool: 'eval',
+    mode: 'development',
+    watch: true,
 	entry: ENTRY_DIR  + '/index.js',
 	output: {
 		path: path.resolve(__dirname, 'app/static/javascript/bin'),
@@ -14,6 +17,7 @@ var config = {
 			{
 				test : /\.js?/,
 				include : ENTRY_DIR,
+				exclude:  MODULES_DIR,
 				loader : 'babel-loader'
 			},
 			{
