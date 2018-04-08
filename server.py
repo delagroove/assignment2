@@ -41,6 +41,7 @@ def queryBank():
     result = db.settings.find_one()
     return json.dumps(result, sort_keys=True, indent=4, default=json_util.default)
 
+
 @socketio.on('bank-add')
 def bankAdd(amount):
     client = MongoClient(port=27017)
@@ -53,6 +54,7 @@ def bankAdd(amount):
     result = db.settings.update_one({}, {"$set": {"cash": result_json['cash']}})
     return result_json['cash']
 
+
 @socketio.on('bank-remove')
 def bankRemove(amount):
     client = MongoClient(port=27017)
@@ -64,6 +66,7 @@ def bankRemove(amount):
     print(result_json['cash'])
     result = db.settings.update_one({}, {"$set": {"cash": result_json['cash']}})
     return result_json['cash']
+
 
 @socketio.on('set-buy')
 def setBuy(values):

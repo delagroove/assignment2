@@ -15,7 +15,7 @@ export default class ProfitLossTable extends Component {
 
 		return (
 			<div className="profit-loss-table">
-				Profit/Loss Table
+				<h2>Profit/Loss Table</h2>
 			</div>
 		)
 	}

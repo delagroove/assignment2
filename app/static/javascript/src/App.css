@@ -76,3 +76,31 @@ button {
   padding: 10px;
   text-align:center;
 }
+.blotter-item tr th{
+  width: 25%;
+}
+
+.blotter {
+
+  width: 50%;
+  height: 150px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  overflow-y: scroll;
+  background-color: #efefef;
+}
+.profit-loss-table {
+  width: 50%;
+  height: 150px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  overflow-y: scroll;
+  background-color: #fefefe;
+}
+
+.blotter td{
+  font-family: verdana;
+  text-align: center;
+}

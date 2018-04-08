@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Graph from './Graph';
 import CurrencySelector from './CurrencySelector';
+import Blotter from './Blotter';
 import OrderForm from './OrderForm';
 import ProfitLossTable from './ProfitLossTable';
 import io from '../helpers/io';
@@ -26,6 +27,7 @@ export default class Trader extends Component {
 			symbol: '',
 			buyPrice: '',
 			sellPrice: '',
+			blotter: [],
 			cash: 0,
 			currentCurrencyPosition: 0
 		}
@@ -52,54 +54,61 @@ export default class Trader extends Component {
 			})
 
 			socket.emit('get-blotter', function(result) {
-				console.log(result);
-				//that.setState({
-				//	orders: result
-				//});
+				that.setState({
+					blotter: JSON.parse(result)
+				});
 			})
 
 		});
 	}
 
 	buyMethod(order){
-		console.log("BUY");
-		//console.log(order);
 		var that = this;
 		var socket = that.state.socket;
 		return new Promise((resolve, reject) => {
-			console.log(order)
 			var orderTotal = parseInt(order.quantity)*parseFloat(order.price);
 			socket.emit('bank-remove', orderTotal, function(a){
 				that.setState({
 					cash: that.state.cash - orderTotal
 				})
 			});
+		order.time = Date.now();
 		socket.emit('set-buy', order ,function(resu) {
 			var result = JSON.parse(resu);
-			console.log(result);
 			resolve("Order saved.")
 		});
+
+		socket.emit('get-blotter', function(result) {
+			that.setState({
+				blotter: JSON.parse(result)
+			});
+		})
+
 		})
 	}
 
 	sellMethod(order){
-		console.log("SELL");
-		console.log(order);
 		var that = this;
 		var socket = that.state.socket;
 		return new Promise((resolve, reject) => {
-			console.log(order)
 			var orderTotal = parseInt(order.quantity)*parseFloat(order.price);
 			socket.emit('bank-add', orderTotal, function(a){
 				that.setState({
 					cash: that.state.cash + orderTotal
 				})
 			});
+			order.time = Date.now();
 			socket.emit('set-sell', order ,function(resu) {
 				var result = JSON.parse(resu);
-				console.log(result);
 				resolve("Order saved.")
 			});
+
+			socket.emit('get-blotter', function(result) {
+				that.setState({
+					blotter: JSON.parse(result)
+				});
+			})
+
 		})
 
 	}
@@ -109,7 +118,7 @@ export default class Trader extends Component {
 		var that = this;
 		var socket = this.state.socket;
 
-		console.log(`COIN: ${coin}`)
+		// console.log(`COIN: ${coin}`)
 
 		socket.emit('select-coin', coin ,function(resu) {
 			var result = JSON.parse(resu);
@@ -130,14 +139,12 @@ export default class Trader extends Component {
 				socket.emit('query-portfolio', coin ,function(resu) {
 					var result_json = JSON.parse(resu);
 					for(var key in result_json){
-						console.log(parseInt(result_json[key].quantity))
 						if (result_json[key].side === 'BUY')
 						shares = shares + parseInt(result_json[key].quantity);
 						else
 						shares = shares - parseInt(result_json[key].quantity);
 					}
-					// console.log('SHARES')
-					// console.log(shares)
+
 
 					that.setState({
 						chartData: data,
@@ -157,11 +164,6 @@ export default class Trader extends Component {
 
 	}
 
-//	setCurrentCurrencyPosition(coin){
-//
-//	}
-
-
 	render() {
 
 		return (
@@ -169,7 +171,8 @@ export default class Trader extends Component {
 				<CurrencySelector currencies={this.state.currencies} selectCurrency={this.selectCurrency.bind(this)}/>
 				<Graph data={this.state.chartData} />
 				<OrderForm symbol={this.state.symbol} buyMethod={this.buyMethod.bind(this)} sellMethod={this.sellMethod.bind(this)} buyPrice={this.state.buyPrice} sellPrice={this.state.sellPrice} cash={this.state.cash} currentCurrencyPosition={this.state.currentCurrencyPosition}/>
-				<ProfitLossTable cash={this.state.cash}/>
+				<Blotter blotter={this.state.blotter} />
+				<ProfitLossTable cash={this.state.cash}  blotter={this.state.blotter} />
 			</div>
 		)
 	}

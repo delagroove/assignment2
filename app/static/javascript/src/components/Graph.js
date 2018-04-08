@@ -32,8 +32,8 @@ export default class Graph extends Component {
 			<div className="chart">
 				<LineChart
 							data={this.state.data}
-							width={1000}
-							height={500}
+							width={900}
+							height={400}
 							margin={{top: 10, bottom: 50, left: 50, right: 10}}
 							xAxis={{tickValues: this.state.xScale.ticks(20), tickFormat: d3.time.format("%m/%d"), label: "Date" }}
 							yAxis={{tickValues: this.state.yScale.ticks(10), label: "Price (USD)" }}
