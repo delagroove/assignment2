@@ -5,12 +5,24 @@ Assignment 2 for Advanced programming course 602
 ## Installation
 run
 ```
-docker build -t assignment2 .
+npm install
+
 ```
 and after that
 
 ```
-docker run -it assignment2
+webpack
+
+```
+to get the web assets built and running.
+
+after that, you must install and set mongo db with the use of run.sh.
+
+then, run the server with:
+
+```
+ FLASK_APP=server.py flask run
+
 ```
 
 ## Usage
@@ -20,9 +32,3 @@ Step 1. visit in a browser http://localhost:5000
 Step 2. Select a currency
 
 Step3. Buy or Sell using the form on the right side of the Graph
-
-## link to Docker Image
-
-```
-https://hub.docker.com/r/delagroove/assignment2/
-```
