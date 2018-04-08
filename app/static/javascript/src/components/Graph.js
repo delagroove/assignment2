@@ -29,7 +29,7 @@ export default class Graph extends Component {
 	render() {
 		if (this.state.data[0].label.indexOf('test') > -1) return null;
 		return (
-			<div>
+			<div className="chart">
 				<LineChart
 							data={this.state.data}
 							width={1000}

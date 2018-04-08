@@ -15,7 +15,11 @@ docker run -it assignment2
 
 ## Usage
 
-Just follow the prompt.
+Step 1. visit in a browser http://localhost:5000
+
+Step 2. Select a currency
+
+Step3. Buy or Sell using the form on the right side of the Graph
 
 ## link to Docker Image
 

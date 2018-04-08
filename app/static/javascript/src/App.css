@@ -17,9 +17,62 @@ html {
   cursor: pointer;
 }
 
-.currency-selector .img{
-  width: 50px;
+.error {
+  color: red;
+  font-size: 10px;
+  font-style: italic;
+  margin-top: 3px;
 }
+
+.currency-selector .img{
+  width: 40px;
+}
+
 .currency-selector img{
-  width: 30px;
+  width: 20px;
+}
+
+.chart{
+  float: left;
+  width: 900px;
+  font-size: 10px;
+  font-family: Helvetica;
+  transition: 1s;
+  left: 0;
+}
+.order {
+  float: right;
+  width: 250px;
+  background-color: #ededed;
+  font-family: Helvetica;
+  font-size: 14px;
+  padding: 20px;
+}
+.order label{
+  font-weight: bold;
+  display: block;
+}
+
+input[type='text']{
+  margin: 10px auto;
+  padding: 5px 10px;
+}
+
+button {
+  background-color: #ccc;
+  color: white;
+  border: none;
+  padding: 2px 10px;
+}
+
+.buyform{
+  background-color: rgba( 23, 45, 222, 0.6);
+}
+.sellform{
+  background-color: rgba( 234, 41, 22, 0.6);
+}
+
+.form-holder{
+  padding: 10px;
+  text-align:center;
 }

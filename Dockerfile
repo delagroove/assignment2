@@ -7,8 +7,8 @@ WORKDIR /usr/src/app
 
 #RUN pip install terminaltables
 #RUN pip install beautifulsoup4
-#RUN pip install requests
-#pip install pymongo
+RUN pip install requests
+RUN pip install pymongo
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
@@ -29,8 +29,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 #
 #EXPOSE 27017
 
-# RUN mongo --eval "db.getSiblingDB('crypto').createUser({'user':'admin', 'pwd':'admin','roles':['readWrite']});"
-
+RUN mongo --eval "db.getSiblingDB('crypto').createUser({'user':'admin', 'pwd':'admin','roles':['readWrite']});db.getSiblingDB('crypto').createCollection('orders');db.getSiblingDB('crypto').createCollection('settings');"
+RUN mongo --eval "db.getSiblingDB('crypto').settings.insert({cash: 100000000})"
 #ADD repo-key /
 
 # Make ssh dir

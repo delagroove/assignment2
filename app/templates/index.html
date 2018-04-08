@@ -8,30 +8,4 @@
         <div id="root"></div>
     </body>
     <script type=text/javascript src="{{url_for('static', filename='javascript/bin/bundle.js') }}"></script>\
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
-<script type="text/javascript" charset="utf-8">
-    var socket = io.connect('http://' + document.domain + ':' + location.port);
-    socket.on('connect', function() {
-        socket.emit('message', {data: 'I\'m connected!'});
-    });
-
-    var currentPrice = {};
-	var socket2 = io.connect('https://streamer.cryptocompare.com/');
-	//Format: {SubscriptionId}~{ExchangeName}~{FromSymbol}~{ToSymbol}
-	//Use SubscriptionId 0 for TRADE, 2 for CURRENT and 5 for CURRENTAGG
-	//For aggregate quote updates use CCCAGG as market
-	var subscription = ['5~CCCAGG~BTC~USD', '5~CCCAGG~ETH~USD'];
-	socket2.emit('SubAdd', { subs: subscription });
-	socket2.on("m", function(message) {
-		var messageType = message.substring(0, message.indexOf("~"));
-		var res = {};
-		if (messageType == CCC.STATIC.TYPE.CURRENTAGG) {
-			res = CCC.CURRENT.unpack(message);
-			dataUnpack(res);
-		}
-	});
-</script>
-
-
-
 </html>
